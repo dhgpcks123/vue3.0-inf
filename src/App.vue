@@ -1,16 +1,36 @@
 <template>
-  <!-- <div v-bind:class="nameClass"> v-bind: -> : 로 사용 가능하다.-->
-  <div :class="nameClass">
-    {{ name }}
-  </div>
-  <input v-bind:type="type" v-bind:value="name" v-bind:placeholder="test">
-  <button
-    class="btn btn-primary"
-    @click="updateName"
-  >
-  <!-- v-on:click="updateName"  v-on:click -> @click -->
-    Click
-  </button>
+  <section class="container">
+    <h2>To-Do List</h2>
+    <form  
+      @submit.prevent="onSubmit"
+      class="d-flex">
+      <div class="flex-grow-1 mr-2">
+        <input
+          class="form-control"
+          type="text"
+          v-model="todo"
+          placeholder="Type new todo"
+        >
+      </div>
+      <div>
+        <button
+          class="btn btn-primary"
+          type="submit"
+        >
+          Add
+        </button>
+      </div>
+    </form>
+    <div
+      v-for="todo in todos"
+      :key="todo.id"
+      class="card mt-2"
+    >
+      <div class="card-body p-2">
+        {{ todo.subject }}
+      </div>
+    </div>
+  </section>
 </template>
 
 <script>
@@ -18,19 +38,22 @@ import { ref } from 'vue'
 
 export default{
   setup() {
-    const name = ref('hyechan')
-    const test = ref('chat here')
-    const type = ref('text')
-    const nameClass = ref('')
+    const todo = ref('')
+    const todos = ref([
+      {id: 1, subject: '행복해지기'},
+      {id: 2, subject: '덜 열심히 살기'},
+    ])
 
-    const updateName = () => {
-      name.value = '5'
-      test.value = '숫자를 입력해주세요'
-      type.value = 'number'
-      nameClass.value = 'name'
+    const onSubmit = () => {
+      todos.value.push({
+        id: Date.now(),
+        subject: todo.value
+      })
+      todo.value = ''
     }
     return {
-      name, updateName, test, type, nameClass
+      todo, todos,
+      onSubmit,
     }
   }
 }
