@@ -1,24 +1,32 @@
 <template>
+  <div v-if="toggle">true</div>
+  <div v-else>false</div>
+  <button @click="onToggle">Toggle</button>
   <section class="container">
     <h2>To-Do List</h2>
     <form  
       @submit.prevent="onSubmit"
-      class="d-flex">
-      <div class="flex-grow-1 mr-2">
-        <input
-          class="form-control"
-          type="text"
-          v-model="todo"
-          placeholder="Type new todo"
-        >
+    >
+      <div class="d-flex">
+        <div class="flex-grow-1 mr-2">
+          <input
+            class="form-control"
+            type="text"
+            v-model="todo"
+            placeholder="Type new todo"
+          >
+        </div>
+        <div>
+          <button
+            class="btn btn-primary"
+            type="submit"
+          >
+            Add
+          </button>
+        </div>
       </div>
-      <div>
-        <button
-          class="btn btn-primary"
-          type="submit"
-        >
-          Add
-        </button>
+      <div v-show="hasError" style="color: red">
+        This field cannot be empty
       </div>
     </form>
     <div
@@ -38,22 +46,32 @@ import { ref } from 'vue'
 
 export default{
   setup() {
+    const toggle = ref(false)
     const todo = ref('')
     const todos = ref([
       {id: 1, subject: '행복해지기'},
       {id: 2, subject: '덜 열심히 살기'},
     ])
+    const hasError = ref(false)
 
     const onSubmit = () => {
-      todos.value.push({
-        id: Date.now(),
-        subject: todo.value
-      })
-      todo.value = ''
+      if(todo.value === ''){
+        hasError.value = true
+      }else{
+        todos.value.push({
+          id: Date.now(),
+          subject: todo.value
+        })
+        todo.value = ''
+        hasError.value = false
+      }
+    }
+    const onToggle = () => {
+      toggle.value = !toggle.value
     }
     return {
-      todo, todos,
-      onSubmit,
+      todo, todos, toggle, hasError,
+      onSubmit, onToggle
     }
   }
 }
