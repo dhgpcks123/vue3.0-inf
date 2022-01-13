@@ -1,7 +1,4 @@
 <template>
-  <div v-if="toggle">true</div>
-  <div v-else>false</div>
-  <button @click="onToggle">Toggle</button>
   <section class="container">
     <h2>To-Do List</h2>
     <form  
@@ -35,7 +32,19 @@
       class="card mt-2"
     >
       <div class="card-body p-2">
-        {{ todo.subject }}
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            v-model="todo.completed"
+          >
+          <label
+            class="form-check-label"
+            :class=" { todo : todo.completed }"
+          >
+            {{ todo.subject }}
+          </label>
+        </div>
       </div>
     </div>
   </section>
@@ -48,10 +57,7 @@ export default{
   setup() {
     const toggle = ref(false)
     const todo = ref('')
-    const todos = ref([
-      {id: 1, subject: '행복해지기'},
-      {id: 2, subject: '덜 열심히 살기'},
-    ])
+    const todos = ref([])
     const hasError = ref(false)
 
     const onSubmit = () => {
@@ -60,18 +66,16 @@ export default{
       }else{
         todos.value.push({
           id: Date.now(),
-          subject: todo.value
+          subject: todo.value,
+          completed: false
         })
-        todo.value = ''
         hasError.value = false
+        todo.value = ''
       }
-    }
-    const onToggle = () => {
-      toggle.value = !toggle.value
     }
     return {
       todo, todos, toggle, hasError,
-      onSubmit, onToggle
+      onSubmit,
     }
   }
 }
@@ -79,7 +83,9 @@ export default{
 </script>
 
 <style scoped>
-.name{
-  color: red
+.todo {
+  color: gray;
+  text-decoration: line-through;
 }
+
 </style>
