@@ -1,81 +1,66 @@
 <template>
   <section class="container">
+    <h4>count : {{count}} </h4>
+    <h4>doubleCountComputed : {{doubleCountComputed}}</h4>
+    <h4>doubleCountComputed : {{doubleCountComputed}}</h4>
+    <h4>doubleCountMethod : {{doubleCountMethod()}}</h4>
+    <h4>doubleCountMethod : {{doubleCountMethod()}}</h4>
+    <button @click="count++">Add One</button>
     <h2>To-Do List</h2>
-    <form  
-      @submit.prevent="onSubmit"
-    >
-      <div class="d-flex">
-        <div class="flex-grow-1 mr-2">
-          <input
-            class="form-control"
-            type="text"
-            v-model="todo"
-            placeholder="Type new todo"
-          >
-        </div>
-        <div>
-          <button
-            class="btn btn-primary"
-            type="submit"
-          >
-            Add
-          </button>
-        </div>
-      </div>
-      <div v-show="hasError" style="color: red">
-        This field cannot be empty
-      </div>
-    </form>
-    <div
-      v-for="todo in todos"
-      :key="todo.id"
-      class="card mt-2"
-    >
-      <div class="card-body p-2">
-        <div class="form-check">
-          <input
-            class="form-check-input"
-            type="checkbox"
-            v-model="todo.completed"
-          >
-          <label
-            class="form-check-label"
-            :class=" { todo : todo.completed }"
-          >
-            {{ todo.subject }}
-          </label>
-        </div>
-      </div>
+    <TodoSimpleForm 
+      @add-todo="addTodo"
+    />
+    <div v-if="!todos.length">
+      추가 된 todo가 없습니다
     </div>
+    <TodoList
+      :todos="todos"
+      @toggle-todo="toggleTodo" 
+      @delete-todo="deleteTodo"
+    />
   </section>
 </template>
 
 <script>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
+import TodoSimpleForm from './components/TodoSimpleForm.vue'
+import TodoList from './components/TodoList.vue'
 
 export default{
+  components :{
+    TodoSimpleForm, TodoList,
+  },
   setup() {
     const toggle = ref(false)
-    const todo = ref('')
     const todos = ref([])
-    const hasError = ref(false)
 
-    const onSubmit = () => {
-      if(todo.value === ''){
-        hasError.value = true
-      }else{
-        todos.value.push({
-          id: Date.now(),
-          subject: todo.value,
-          completed: false
-        })
-        hasError.value = false
-        todo.value = ''
-      }
+    const addTodo = (todo) => {
+      todos.value.push(todo);
     }
+    const toggleTodo = (index) => {
+      todos.value[index].completed = !todos.value[index].completed
+    }
+    const deleteTodo = (index) => {
+      todos.value.splice(index, 1)
+    }
+
+    const count = ref(1)
+    const doubleCountComputed = computed (()=>{
+      console.log('computed')
+      return count.value * 2
+      //계산 된 값 캐싱. method보다 효율 좋음.
+    })
+    //함수랑 뭐가 다를까요>
+    const doubleCountMethod = () => {
+      console.log('method')
+      return count.value * 2
+      //method는 인자 받아서 쓸 수 있음. computed는 사용할 수 없음.
+    }
+
     return {
-      todo, todos, toggle, hasError,
-      onSubmit,
+      todos, toggle,
+      deleteTodo, toggleTodo, addTodo,
+      count, doubleCountComputed, doubleCountMethod,
     }
   }
 }
@@ -83,9 +68,5 @@ export default{
 </script>
 
 <style scoped>
-.todo {
-  color: gray;
-  text-decoration: line-through;
-}
 
 </style>
