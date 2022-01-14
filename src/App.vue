@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import TodoSimpleForm from './components/TodoSimpleForm.vue'
 import TodoList from './components/TodoList.vue'
 import Pagination from './components/Pagination.vue'
@@ -49,9 +49,21 @@ export default{
     const limit = 5
     const currentPage = ref(1)
 
+    watch([currentPage, numberOfTodos], (currentPage, prev)=>{
+      console.log('currentPage : '+currentPage)
+      console.log('prev : '+prev)
+    })
+    // watchEffect(()=>{
+      // console.log(currentPage.value)
+      // console.log(numberOfTodos.value)
+      // watchEffect안에 들어 있는 값 중에 ref, reactive 변경되면 watchEffect 실행된다.
+    // })
     const numberOfPages = computed(()=>{
       return Math.ceil(numberOfTodos.value/limit)
     })
+    // watchEffect(() => {
+      // console.log(numberOfPages.value)
+    // })
 
     const getTodos = async (page = currentPage.value) => {
       // es6문법인가봄. page 받는데 디폴트 값 currentPage.value인가봐.
