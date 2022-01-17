@@ -1,6 +1,6 @@
 <template>
-  <h1>Todo 페이지</h1>
-  <todoForm :editing="true" />
+  <h1> Create Todo </h1>
+  <TodoForm/>
 </template>
 
 <script>
@@ -8,7 +8,7 @@ import TodoForm from '@/components/TodoForm.vue'
 
 export default{
   components: {
-    TodoForm
+    TodoForm,
   }
 }
 </script>
