@@ -5,15 +5,17 @@
       class="card mt-2"
     >
       <div
-        @click="moveToPage(todo.id)"
         class="card-body d-flex p-2 align-items-center"
+        @click="moveToPage(todo.id)"
+        style="cursor: pointer"
       >
         <div class="form-check flex-grow-1">
           <input
             class="form-check-input"
             type="checkbox"
             :checked="todo.completed"
-            @change="toggleTodo(index)"
+            @change="toggleTodo(index, $event)"
+            @click.stop
           >
           <label
             class="form-check-label"
@@ -25,7 +27,7 @@
         <div>
           <button
             class="btn btn-danger btn-sm"
-            @click="deleteTodo(index)"
+            @click.stop="deleteTodo(index)"
           >
             Delete
           </button>
@@ -35,7 +37,7 @@
 </template>
 
 <script>
-// import { useRouter } from 'vue-router'
+import { useRouter } from 'vue-router'
 
 export default {
   props: {
@@ -46,15 +48,24 @@ export default {
   },
   emits: ['toggle-todo', 'delete-todo'],
   setup(props, { emit }) {
-    // const router = useRouter()
-    const toggleTodo = (index) => {
-      emit('toggle-todo', index);
+    const router = useRouter()
+    const toggleTodo = (index, event) => {
+      emit('toggle-todo', index, event.target.checked)
+
     }
     const deleteTodo = (index) => {
       emit('delete-todo', index)
     }
     const moveToPage = (todoId) => {
       console.log(todoId)
+      // router.push(`/todos/${todoId}`)
+      router.push({
+        name: 'Todo',
+        params: {
+          id: todoId
+        }
+      })
+      //코드는 위에꺼가 짧고 간략하지만.. 아래꺼는 이름으로 바꾸니까 path, 경로 바꾸더라도 바꿀 수 있음. 그리고 파라미터 뭐 념기는지 명확하기도 하고.
     }
     return{
       toggleTodo, deleteTodo, moveToPage,

@@ -17,68 +17,28 @@
     },
     {
       "subject": "ㅈㄷㄹ",
-      "completed": false,
+      "completed": true,
       "id": 15
     },
     {
       "subject": "ㅈㄷㄹ",
-      "completed": false,
+      "completed": true,
       "id": 16
     },
     {
       "subject": "ㅈ",
-      "completed": false,
+      "completed": true,
       "id": 17
     },
     {
       "subject": "키다운할때마다 서버 요청",
-      "completed": false,
+      "completed": true,
       "id": 18
     },
     {
-      "subject": "하는 건데",
+      "subject": "게시판 만들 수 잇겠네g",
       "completed": false,
       "id": 19
-    },
-    {
-      "subject": "그게 괜찮아??",
-      "completed": false,
-      "id": 20
-    },
-    {
-      "subject": "hi",
-      "completed": false,
-      "id": 22
-    },
-    {
-      "subject": "gd",
-      "completed": false,
-      "id": 23
-    },
-    {
-      "subject": "test",
-      "completed": false,
-      "id": 24
-    },
-    {
-      "subject": "이제 값 입력",
-      "completed": false,
-      "id": 25
-    },
-    {
-      "subject": "하면 앞에다가",
-      "completed": false,
-      "id": 26
-    },
-    {
-      "subject": "쿠쿠루삥뽕",
-      "completed": false,
-      "id": 28
-    },
-    {
-      "subject": "냅둬야하네",
-      "completed": false,
-      "id": 30
     }
   ]
 }

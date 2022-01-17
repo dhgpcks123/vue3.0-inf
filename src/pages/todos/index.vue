@@ -1,6 +1,5 @@
 <template>
-  <router-view/>
-  <section class="container">
+  <section>
     <h2>To-Do List</h2>
     <input
       class="form-control"
@@ -84,14 +83,15 @@ export default{
         console.log(err)
       } 
     }
-    const toggleTodo = (index) => {
+    const toggleTodo = (index, checked) => {
+      console.log(checked)
       error.value = ''
       const id = todos.value[index].id
       try{
         axios.patch(`http://localhost:3000/todos/${id}`, {
-          completed: !todos.value[index].completed
+          completed: checked
         })
-        todos.value[index].completed = !todos.value[index].completed
+        todos.value[index].completed = checked
       }catch(err){
         error.value = 'Something went wrong.'
         console.log(err)
