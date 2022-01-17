@@ -54,12 +54,13 @@
     :message="toastMessage"
     :type="toastAlertType"
   />
+  <div id="mountTest"></div>
 </template>
 
 <script>
 import { useRoute, useRouter } from 'vue-router'
 import axios from 'axios'
-import { ref, computed } from 'vue'
+import { ref, computed, onBeforeMount, onMounted, onBeforeUpdate, onUpdated, onBeforeUnmount, onUnmounted } from 'vue'
 import _ from 'lodash'
 import Toast from '@/components/Toast.vue'
 
@@ -69,6 +70,29 @@ export default {
     Toast,
   },
   setup(){
+    onBeforeMount(()=> {
+      //dom에 마운트 되기 전에
+      console.log(document.querySelector('#mountTest'))
+    })
+    onMounted(()=>{
+      //dom에 마운트 되었을 때
+      console.log(document.querySelector('#mountTest'))
+    })
+    onBeforeUpdate(()=>{
+      console.log('beforeUpdate')
+    })
+    onUpdated(()=>{
+      console.log('updated')
+    })
+    onBeforeUnmount(()=>{
+      console.log('onBeforeUnmount')
+    })
+    onUnmounted(()=>{
+      console.log('Unmounted')
+      //쓸 때 없는 게 메모리 먹고 있지 않도록 하기 위해서 onUnmounted사용한다.
+    })
+    console.log('hello')
+    //mount 되기 전에  setup한번 훑고 mount 실행
     const route = useRoute()
     const router = useRouter()
     const todo = ref(null)
