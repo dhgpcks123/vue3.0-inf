@@ -9,37 +9,50 @@
         @click="moveToPage(todo.id)"
         style="cursor: pointer"
       >
-        <div class="form-check flex-grow-1">
+        <div class="flex-grow-1">
           <input
-            class="form-check-input"
+            class="ml-2 mr-2"
             type="checkbox"
             :checked="todo.completed"
             @change="toggleTodo(index, $event)"
             @click.stop
           >
-          <label
-            class="form-check-label"
+          <span
             :class=" { todo : todo.completed }"
           >
             {{ todo.subject }}
-          </label>
+          </span>
         </div>
         <div>
           <button
             class="btn btn-danger btn-sm"
-            @click.stop="deleteTodo(index)"
+            @click.stop="openModal(todo.id)"
           >
             Delete
           </button>
         </div>
       </div>
     </div>
+    <teleport to="#modal">
+      <Modal
+        v-if="showModal"
+        @close="closeModal"
+        @delete="deleteTodo"
+      >
+      </Modal>
+      <!-- 최상위에 위치해야하는 모달이나 toast 같은 걸 teleport하면 좋다 navbar? bottom-navbar? -->
+    </teleport>
 </template>
 
 <script>
 import { useRouter } from 'vue-router'
+import Modal from '@/components/Modal.vue'
+import { ref } from 'vue'
 
 export default {
+  components: {
+    Modal,
+  },
   props: {
     todos: {
       type: Array,
@@ -49,12 +62,27 @@ export default {
   emits: ['toggle-todo', 'delete-todo'],
   setup(props, { emit }) {
     const router = useRouter()
+    const showModal = ref(false)
+    const todoDeleteId = ref(null)
     const toggleTodo = (index, event) => {
       emit('toggle-todo', index, event.target.checked)
 
     }
-    const deleteTodo = (index) => {
-      emit('delete-todo', index)
+
+    const openModal = (id) => {
+      todoDeleteId.value = id
+      showModal.value = true
+    }
+
+    const closeModal = () => {
+      todoDeleteId.value = null
+      showModal.value = false
+    }
+
+    const deleteTodo = () => {
+      emit('delete-todo', todoDeleteId.value)
+      showModal.value = false
+      todoDeleteId.value = null
     }
     const moveToPage = (todoId) => {
       console.log(todoId)
@@ -69,6 +97,7 @@ export default {
     }
     return{
       toggleTodo, deleteTodo, moveToPage,
+      showModal, openModal, closeModal, todoDeleteId,
     }
   }
 }

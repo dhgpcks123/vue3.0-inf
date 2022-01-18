@@ -1,0 +1,34 @@
+<template>
+  <Modal>
+    <template v-slot:title> Delete Todo@ </template>
+    <template v-slot:body> Are you sure you want delete todo?</template>
+    <template v-slot:footer>
+      <button
+        class="btn btn-secondary"
+        type="button"
+        @click="onClose"
+      >Close
+      </button>
+      <button
+        class="btn btn-danger"
+        type="button"
+        @click="onDelete"
+      >Delete
+      </button>
+    </template>
+  </Modal>
+</template>
+
+<script>
+import Modal from '@/components/Modal.vue'
+export default {
+  components: {
+    Modal,
+  }
+
+}
+</script>
+
+<style>
+
+</style>

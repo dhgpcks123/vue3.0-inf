@@ -115,9 +115,8 @@ export default{
         console.log(err)
       }
     }
-    const deleteTodo = async (index) => {
-      const id = todos.value[index].id
-      todos.value.splice(index, 1)
+    const deleteTodo = async (id) => {
+
       try{
         await axios.delete(`http://localhost:3000/todos/${id}`)
         getTodos(1)

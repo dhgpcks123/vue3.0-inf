@@ -11,13 +11,13 @@
         <div class="form-group">
           <label>Subject</label>
           <input
+            class="form-control"
             v-model="todo.subject"
             type="text"
-            class="form-control"
           >
           <div
+            class="text-red"
             v-if="subjectError"
-            style="color: red"
           >
             {{subjectError}}
           </div>
@@ -61,11 +61,13 @@
       취소
     </button>
   </form>
-  <Toast 
-    v-if="showToast"
-    :message="toastMessage"
-    :type="toastAlertType"
-  />
+  <transition name="fade">
+    <Toast 
+      v-show="showToast"
+      :message="toastMessage"
+      :type="toastAlertType"
+    />
+  </transition>
 </template>
 
 <script>
@@ -177,6 +179,23 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+  .text-red{
+    color: red;
+  }
+  .fade-enter-active, .fade-leave-active{
+    transition: all 1s ease;
+  }
+  .fade-enter-from, .fade-leave-to{
+    opacity: 0;
+    transform: translateY(-30px);
+  }
 
+  .fade-enter-to, .fade-leve-from{
+    opacity: 1;
+    transform: translateY(0px);
+  }
+</style>
+<style>
+/* 글로벌하게 사용하도록 하나 더 추가 가능하다. */
 </style>
