@@ -12,7 +12,7 @@
     },
     {
       "subject": "ㅈㄷㄹ",
-      "completed": true,
+      "completed": false,
       "id": 13
     },
     {
@@ -22,15 +22,9 @@
       "id": 22
     },
     {
-      "subject": "zgzg",
+      "subject": "teest",
       "completed": false,
-      "body": "zgzg",
-      "id": 23
-    },
-    {
-      "subject": "buy milk",
-      "completed": false,
-      "body": "buy milk",
+      "body": "test",
       "id": 24
     }
   ]

@@ -38,15 +38,14 @@
         v-if="showModal"
         @close="closeModal"
         @delete="deleteTodo"
-      >
-      </Modal>
+      />
       <!-- 최상위에 위치해야하는 모달이나 toast 같은 걸 teleport하면 좋다 navbar? bottom-navbar? -->
     </teleport>
 </template>
 
 <script>
 import { useRouter } from 'vue-router'
-import Modal from '@/components/Modal.vue'
+import Modal from '@/components/DeleteModal.vue'
 import { ref } from 'vue'
 
 export default {

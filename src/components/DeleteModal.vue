@@ -24,8 +24,18 @@ import Modal from '@/components/Modal.vue'
 export default {
   components: {
     Modal,
+  },
+  setup(props, { emit }) {
+    const onClose = () => {
+      emit('close')
+    }
+    const onDelete = () => {
+      emit('delete')
+    }
+    return {
+      onClose, onDelete
+    }
   }
-
 }
 </script>
 

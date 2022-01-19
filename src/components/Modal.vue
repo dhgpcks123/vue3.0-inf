@@ -28,11 +28,8 @@ export default {
     const onClose = () => {
       emit('close')
     }
-    const onDelete = () => {
-      emit('delete')
-    }
     return {
-      onClose, onDelete
+      onClose,
     }
   }
 }
