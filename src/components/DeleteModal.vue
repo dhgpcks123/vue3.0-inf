@@ -1,7 +1,8 @@
 <template>
+<!-- v-on -> @, v-bind -> :, v-slot -> # -->
   <Modal>
-    <template v-slot:title> Delete Todo@ </template>
-    <template v-slot:body> Are you sure you want delete todo?</template>
+    <template #title> Delete Todo@ </template>
+    <template #body> Are you sure you want delete todo?</template>
     <template v-slot:footer>
       <button
         class="btn btn-secondary"

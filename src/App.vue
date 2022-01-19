@@ -8,14 +8,41 @@
         </li>
       </ul>
   </div>
-</nav>
-<div class="container">
-  <router-view/>
-</div>
+  </nav>
+  <div class="container">
+    <router-view/>
+  </div>
+  <Toast 
+    v-show="showToast"
+    :message="toastMessage"
+    :type="toastAlertType"
+  />
 </template>
 
 <script>
+import Toast from '@/components/Toast.vue'
+import { useToast } from '@/composables/toast.js'
+
 export default{
+  components: {
+    Toast,
+  },
+  setup () {
+    const { toastMessage,
+            showToast, 
+            toastAlertType, 
+            triggerToast } = useToast()
+
+    console.log(showToast.value)
+    
+    return {
+      toastMessage,
+      showToast, 
+      toastAlertType, 
+      triggerToast
+    }
+
+  }
 }
 </script>
 
