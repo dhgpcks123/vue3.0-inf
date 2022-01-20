@@ -40,13 +40,14 @@ export default {
       required: true,
     }
   },
+  emits: ['get-todos'],
   setup(context, { emit }){
     const getTodos = (page)=>{
       emit('get-todos', page)
     }
     return {
       getTodos
-      }
+    }
   }
 
 }

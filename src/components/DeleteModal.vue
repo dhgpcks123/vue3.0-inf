@@ -26,6 +26,7 @@ export default {
   components: {
     Modal,
   },
+  emits: ['close', 'delete'],
   setup(props, { emit }) {
     const onClose = () => {
       emit('close')

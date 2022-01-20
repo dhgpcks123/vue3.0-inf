@@ -54,13 +54,6 @@
       취소
     </button>
   </form>
-  <transition name="fade">
-    <Toast 
-      v-show="showToast"
-      :message="toastMessage"
-      :type="toastAlertType"
-    />
-  </transition>
 </template>
 
 <script>
@@ -68,7 +61,6 @@ import { useRoute, useRouter } from 'vue-router'
 import axios from '@/axios'
 import { ref, computed } from 'vue'
 import _ from 'lodash'
-import Toast from '@/components/Toast.vue'
 import { useToast } from '@/composables/toast'
 import Input from '@/components/Input.vue'
 
@@ -76,7 +68,7 @@ import Input from '@/components/Input.vue'
 //Router와 Route차이
 export default {
   components: {
-    Toast, Input
+    Input
   },
   props:{
     editing:{

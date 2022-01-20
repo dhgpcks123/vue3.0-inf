@@ -24,6 +24,7 @@
 
 <script>
 export default {
+  emits: ['close'],
   setup(props, { emit }) {
     const onClose = () => {
       emit('close')
